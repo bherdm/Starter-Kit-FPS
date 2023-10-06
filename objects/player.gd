@@ -53,7 +53,6 @@ func _ready():
 func _physics_process(delta):
 	
 	# Handle functions
-	
 	handle_controls(delta)
 	handle_gravity(delta)
 	
@@ -113,8 +112,10 @@ func _input(event):
 
 func handle_controls(_delta):
 	
+	if Input.is_action_just_pressed("ooooWhatDoesThisButtonDoooooo"):
+		get_tree().reload_current_scene()
 	# Mouse capture
-	
+
 	if Input.is_action_just_pressed("mouse_capture"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		mouse_captured = true
@@ -189,8 +190,9 @@ func action_jump():
 func action_shoot():
 	
 	if Input.is_action_pressed("shoot"):
-	
+
 		if !blaster_cooldown.is_stopped(): return # Cooldown for shooting
+		if weapon == null: return # Prevents weapon being accessed before it has loaded in the scenetree
 		
 		Audio.play(weapon.sound_shoot)
 		
